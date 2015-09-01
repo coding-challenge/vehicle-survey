@@ -6,14 +6,13 @@ package com.aconex.challenge.vehicle;
 /**
  * Holds the information about each mark on the rubber hose
  * 
- * @author Bharath Maturi
+ * @author bmaturi
  *
  */
 public class Record {
 	
 	// Direction on which the mark happened
-	// FIXME find a better data structure
-	private char direction;
+	private Direction direction;
 	
 	// time in milliseconds after midnight when 
 	// the mark happened
@@ -22,14 +21,14 @@ public class Record {
 	/**
 	 * @return the direction
 	 */
-	public char getDirection() {
+	public Direction getDirection() {
 		return direction;
 	}
 
 	/**
 	 * @param direction the direction to set
 	 */
-	public void setDirection(char direction) {
+	public void setDirection(Direction direction) {
 		this.direction = direction;
 	}
 
