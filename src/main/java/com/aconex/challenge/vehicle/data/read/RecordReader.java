@@ -6,6 +6,7 @@ package com.aconex.challenge.vehicle.data.read;
 import java.io.File;
 import java.io.IOException;
 
+import com.aconex.challenge.vehicle.data.RecordDataAccess;
 import com.aconex.challenge.vehicle.data.exception.InvalidRecordException;
 
 /**
@@ -13,6 +14,6 @@ import com.aconex.challenge.vehicle.data.exception.InvalidRecordException;
  */
 public interface RecordReader {
 
-    public RecordReader read(File file) throws IOException, InvalidRecordException;
+    public RecordDataAccess read(File file) throws IOException, InvalidRecordException;
 
 }
