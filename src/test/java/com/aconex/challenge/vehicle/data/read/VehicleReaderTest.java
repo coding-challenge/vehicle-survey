@@ -44,4 +44,23 @@ public class VehicleReaderTest {
     public void readOnInvalidData() throws InvalidRecordException, IOException {
         new VehicleRecordReader().read(new File(getClass().getResource("/vehicle-data-bad.txt").getFile()));
     }
+
+    /**
+     * Testcase outside the current scope of 5 days, implementation should be able to handle this
+     *
+     * @throws InvalidRecordException
+     * @throws IOException
+     */
+    @Test
+    public void readDataFor8Days() throws InvalidRecordException, IOException {
+        final RecordDataAccess dataAccess = new VehicleRecordReader().read(new File(getClass().getResource(
+                "/vehicle-data-8-days.txt").getFile()));
+        assertNotNull(dataAccess);
+        assertEquals("Should contain 24 vehicle records", 24, dataAccess.getAllRecords().size());
+        assertEquals("First record should be on MONDAY", Day.MONDAY, dataAccess.getAllRecords().get(0).getDay());
+        // last record should be on a Monday since we have 8 days of records starting with Monday
+        assertEquals(
+                "Last record should be on MONDAY", Day.MONDAY,
+                dataAccess.getAllRecords().get(dataAccess.getAllRecords().size() - 1).getDay());
+    }
 }
