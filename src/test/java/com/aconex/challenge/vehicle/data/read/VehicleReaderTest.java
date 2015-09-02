@@ -12,6 +12,7 @@ import java.io.IOException;
 
 import org.junit.Test;
 
+import com.aconex.challenge.vehicle.Day;
 import com.aconex.challenge.vehicle.data.RecordDataAccess;
 import com.aconex.challenge.vehicle.data.exception.InvalidRecordException;
 
@@ -27,6 +28,11 @@ public class VehicleReaderTest {
                 "/vehicle-data.txt").getFile()));
         assertNotNull(dataAccess);
         assertEquals("Should contain 330 vehicle records", 330, dataAccess.getAllRecords().size());
+        assertEquals("First record should be on MONDAY", Day.MONDAY, dataAccess.getAllRecords().get(0).getDay());
+        // last record should be on a Friday since we have 5 days of records starting with Monday
+        assertEquals(
+                "Last record should be on FRIDAY", Day.FRIDAY,
+                dataAccess.getAllRecords().get(dataAccess.getAllRecords().size() - 1).getDay());
     }
 
     @Test(expected = FileNotFoundException.class)
