@@ -17,6 +17,11 @@ public class Record {
     // the mark happened
     private long timestamp;
 
+    public Record(Direction direction, long timestamp2) {
+        this.direction = direction;
+        this.timestamp = timestamp2;
+    }
+
     /**
      * @return the direction
      */
