@@ -18,4 +18,9 @@ public class CONSTANTS {
         public static final long HALFDAY = HOUR * 12;
     }
 
+    public static final class DATE_PATTERN {
+
+        public static final String HOUR_PATTERN = "HH:mm";
+    }
+
 }
