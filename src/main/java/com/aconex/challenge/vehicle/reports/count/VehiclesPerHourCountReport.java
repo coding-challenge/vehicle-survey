@@ -49,8 +49,7 @@ public class VehiclesPerHourCountReport extends AbstractVehicleReport {
                 final Map<Day, List<VehicleRecord>> vehicleRecords = vehicleDataAccess.findRecordsInRangeAndDirection(
                         startTime, startTime + timeInterval, direction);
                 final List<VehicleRecord> dayVehicleRecords = vehicleRecords.get(day);
-                final int noOfVehicles = (dayVehicleRecords == null || dayVehicleRecords.isEmpty())
-                        ? 0 : dayVehicleRecords.size();
+                final int noOfVehicles = (dayVehicleRecords == null) ? 0 : dayVehicleRecords.size();
                 sb.append("    " + noOfVehicles + "          |");
             }
             writeLog(sb.toString());
