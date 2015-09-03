@@ -8,10 +8,10 @@ import com.aconex.challenge.vehicle.constants.CONSTANTS;
 /**
  * @author bmaturi
  */
-public class VehiclesPerHourCountReport extends AbstractDayVehicleCountTimeReport {
+public class VehiclesPerHalfHourCountReport extends AbstractDayVehicleCountTimeReport {
 
-    private static final String HOUR_NAME = "HOUR";
-    private static final String NAME = "VehiclesPerHourPerDirectionCount";
+    private static final String HALF_HOUR_NAME = "HALF-HOUR";
+    private static final String NAME = "VehiclesPerHalfHourPerDirectionCount";
 
     @Override
     public String getName() {
@@ -20,12 +20,12 @@ public class VehiclesPerHourCountReport extends AbstractDayVehicleCountTimeRepor
 
     @Override
     protected long getTimeInterval() {
-        return CONSTANTS.MILLIS.HOUR;
+        return CONSTANTS.MILLIS.HALF_HOUR;
     }
 
     @Override
     protected String getTimeIntervalName() {
-        return HOUR_NAME;
+        return HALF_HOUR_NAME;
     }
 
 }
