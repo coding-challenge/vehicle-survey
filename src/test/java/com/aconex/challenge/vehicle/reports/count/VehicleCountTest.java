@@ -35,4 +35,24 @@ public class VehicleCountTest {
         new VehiclesPerHourCountReport().runReport(dataAccess);
     }
 
+    @Test
+    public void runReportOnHalfHourInterval() {
+        new VehiclesPerHalfHourCountReport().runReport(dataAccess);
+    }
+
+    @Test
+    public void runReportOnQuarterHourInterval() {
+        new VehiclesPerQuarterHourCountReport().runReport(dataAccess);
+    }
+
+    @Test
+    public void runReportOnSessionInterval() {
+        new VehiclesPerSessionCountReport().runReport(dataAccess);
+    }
+
+    @Test
+    public void runReportOnTwentyMonutesInterval() {
+        new VehiclesPerTwentyMinutesCountReport().runReport(dataAccess);
+    }
+
 }
