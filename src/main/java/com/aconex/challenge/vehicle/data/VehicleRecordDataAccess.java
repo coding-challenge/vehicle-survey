@@ -4,6 +4,7 @@
 package com.aconex.challenge.vehicle.data;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -29,8 +30,8 @@ public class VehicleRecordDataAccess implements RecordDataAccess {
      * @return Map<Day, List<VehicleRecord>>
      */
     public Map<Day, List<VehicleRecord>> findRecordsInRangeAndDirection(long startTime,
-                                                                        long endTime,
-                                                                        Direction direction) {
+            long endTime,
+            Direction direction) {
 
         final Map<Day, List<VehicleRecord>> resultMap = new TreeMap<Day, List<VehicleRecord>>();
 
@@ -48,6 +49,19 @@ public class VehicleRecordDataAccess implements RecordDataAccess {
             }
         }
         return resultMap;
+    }
+
+    /**
+     * This method returns a map of timeinterval to Average distance in metres b/w vehicles for all
+     * the days the records are available for.
+     *
+     * @param timeInterval
+     * @param direction
+     * @return Map<Long, String>
+     */
+    public Map<Long, String> fetchAverageDistancesBetweenvehicles(long timeInterval, Direction direction) {
+        final Map<Long, String> averageResultMap = new HashMap<Long, String>();
+        return averageResultMap;
     }
 
     @Override
