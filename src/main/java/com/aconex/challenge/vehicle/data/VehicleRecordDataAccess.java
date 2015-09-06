@@ -12,6 +12,7 @@ import java.util.TreeMap;
 
 import com.aconex.challenge.vehicle.Day;
 import com.aconex.challenge.vehicle.Direction;
+import com.aconex.challenge.vehicle.Record;
 import com.aconex.challenge.vehicle.VehicleRecord;
 import com.aconex.challenge.vehicle.constants.CONSTANTS;
 
@@ -24,6 +25,8 @@ public class VehicleRecordDataAccess implements RecordDataAccess {
 
     // Speed in kmph
     private static final float VEHICLE_AVERAGE_SPEED = 60;
+
+    private static final float VEHICLE_WHEEL_BASE = (float) 2.5;
 
     /**
      * This method returns a Map of all the days in the vehicle records and the corresponding
@@ -98,6 +101,43 @@ public class VehicleRecordDataAccess implements RecordDataAccess {
         return averageResultMap;
     }
 
+    /**
+     * This method returns the average speed of cars for all the days in a give ntime interval
+     *
+     * @param timeInterval
+     * @param direction
+     * @return Map<Long, String>
+     */
+    public Map<Long, String> fetchAverageSpeedForTimeInterval(long timeInterval, Direction direction) {
+        final Map<Long, String> averageResultMap = new HashMap<Long, String>();
+        for (long initialTime = 0; initialTime < CONSTANTS.MILLIS.DAY; initialTime += timeInterval) {
+            final Map<Day, List<VehicleRecord>> vehicleRecordsMap = findRecordsInRangeAndDirection(
+                    initialTime, initialTime + timeInterval, direction);
+
+            float totalspeed = 0;
+            int noOfCOunts = 0;
+            for (final List<VehicleRecord> records : vehicleRecordsMap.values()) {
+                if (records == null || records.isEmpty()) {
+                    continue;
+                } else {
+                    for (final VehicleRecord vehicleRecord : records) {
+                        final long timeBetweenRecords = getTimeBetweenRecords(vehicleRecord);
+
+                        totalspeed += ((VEHICLE_WHEEL_BASE / 1000) * CONSTANTS.MILLIS.HOUR) / timeBetweenRecords;
+                        noOfCOunts++;
+                    }
+                }
+            }
+            if (totalspeed == 0) {
+                averageResultMap.put(Long.valueOf(initialTime), "0");
+            } else {
+                final DecimalFormat decimalFormat = new DecimalFormat("0.000");
+                averageResultMap.put(Long.valueOf(initialTime), decimalFormat.format(totalspeed / noOfCOunts));
+            }
+        }
+        return averageResultMap;
+    }
+
     @Override
     public void add(VehicleRecord vehicleRecord) {
         this.vehicleRecords.add(vehicleRecord);
@@ -111,6 +151,17 @@ public class VehicleRecordDataAccess implements RecordDataAccess {
     @Override
     public List<VehicleRecord> getAllRecords() {
         return this.vehicleRecords;
+    }
+
+    private long getTimeBetweenRecords(VehicleRecord vehicleRecord) {
+        long time = 0;
+        final List<Record> records = vehicleRecord.getRecords();
+        if (records.size() == 4) {
+            time = records.get(2).getTimestamp() - records.get(0).getTimestamp();
+        } else {
+            time = records.get(1).getTimestamp() - records.get(0).getTimestamp();
+        }
+        return time;
     }
 
     private long getTimeBetweenvehicles(VehicleRecord prevVehicleRecord, VehicleRecord vehicleRecord) {

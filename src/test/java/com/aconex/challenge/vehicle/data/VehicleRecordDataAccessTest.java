@@ -91,4 +91,12 @@ public class VehicleRecordDataAccessTest extends InitializeDataAccess {
         assertEquals(24, averageDistanceMap.size());
     }
 
+    @Test
+    public void fetchAverageSpeedPerHour() {
+        final Map<Long, String> averageDistanceMap = dataAccess.fetchAverageSpeedForTimeInterval(
+                CONSTANTS.MILLIS.HOUR, Direction.A);
+        assertNotNull(averageDistanceMap);
+        assertEquals(24, averageDistanceMap.size());
+        assertEquals("68.702", averageDistanceMap.get(CONSTANTS.MILLIS.HOUR));
+    }
 }
