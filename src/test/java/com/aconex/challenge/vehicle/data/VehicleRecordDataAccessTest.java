@@ -6,34 +6,21 @@ package com.aconex.challenge.vehicle.data;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.aconex.challenge.vehicle.Day;
 import com.aconex.challenge.vehicle.Direction;
 import com.aconex.challenge.vehicle.VehicleRecord;
 import com.aconex.challenge.vehicle.constants.CONSTANTS;
-import com.aconex.challenge.vehicle.data.exception.InvalidRecordException;
-import com.aconex.challenge.vehicle.data.read.VehicleRecordReader;
+import com.aconex.challenge.vehicle.reports.count.InitializeDataAccess;
 
 /**
  * @author bmaturi
  */
-public class VehicleRecordDataAccessTest {
-
-    static VehicleRecordDataAccess dataAccess = null;
-
-    // Whole TestClass fails when file read fails
-    @BeforeClass
-    public static void setUpTestClass() throws InvalidRecordException, IOException {
-        dataAccess = (VehicleRecordDataAccess) new VehicleRecordReader().read(new File(
-                VehicleRecordDataAccessTest.class.getResource("/vehicle-data.txt").getFile()));
-    }
+public class VehicleRecordDataAccessTest extends InitializeDataAccess {
 
     @Test
     public void findRecordsInRangeAndDirectionAHourInterval() {
@@ -85,5 +72,31 @@ public class VehicleRecordDataAccessTest {
         assertEquals(0, vehicleRecordsMap.get(Day.MONDAY).size());
         // 0 vehicles on Friday morning
         assertEquals(0, vehicleRecordsMap.get(Day.FRIDAY).size());
+    }
+
+    @Test
+    public void fetchAverageDistancesBetweenvehiclesPerHourDirA() {
+        final Map<Long, String> averageDistanceMap = dataAccess.fetchAverageDistancesBetweenvehicles(
+                CONSTANTS.MILLIS.HOUR, Direction.A);
+        assertNotNull(averageDistanceMap);
+        assertEquals(24, averageDistanceMap.size());
+        assertEquals("0", averageDistanceMap.get(CONSTANTS.MILLIS.HOUR));
+    }
+
+    @Test
+    public void fetchAverageDistancesBetweenvehiclesPerHourDirB() {
+        final Map<Long, String> averageDistanceMap = dataAccess.fetchAverageDistancesBetweenvehicles(
+                CONSTANTS.MILLIS.HOUR, Direction.B);
+        assertNotNull(averageDistanceMap);
+        assertEquals(24, averageDistanceMap.size());
+    }
+
+    @Test
+    public void fetchAverageSpeedPerHour() {
+        final Map<Long, String> averageDistanceMap = dataAccess.fetchAverageSpeedForTimeInterval(
+                CONSTANTS.MILLIS.HOUR, Direction.A);
+        assertNotNull(averageDistanceMap);
+        assertEquals(24, averageDistanceMap.size());
+        assertEquals("68.702", averageDistanceMap.get(CONSTANTS.MILLIS.HOUR));
     }
 }
