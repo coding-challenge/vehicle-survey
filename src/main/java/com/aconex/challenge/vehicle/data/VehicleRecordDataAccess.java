@@ -16,6 +16,9 @@ import com.aconex.challenge.vehicle.VehicleRecord;
 import com.aconex.challenge.vehicle.constants.CONSTANTS;
 
 /**
+ * The class acts as an InMemory data holder for the list of VehicleRecords read from the input data
+ * file and provides public interfaces to fetch data in required format
+ *
  * @author bmaturi
  */
 public class VehicleRecordDataAccess implements RecordDataAccess {
@@ -37,8 +40,8 @@ public class VehicleRecordDataAccess implements RecordDataAccess {
      * @return Map<Day, List<VehicleRecord>>
      */
     public Map<Day, List<VehicleRecord>> findRecordsInRangeAndDirection(long startTime,
-            long endTime,
-            Direction direction) {
+                                                                        long endTime,
+                                                                        Direction direction) {
 
         final Map<Day, List<VehicleRecord>> resultMap = new TreeMap<Day, List<VehicleRecord>>();
 
@@ -135,6 +138,30 @@ public class VehicleRecordDataAccess implements RecordDataAccess {
             }
         }
         return averageResultMap;
+    }
+
+    /**
+     * Returns the @PeakData information in the input time interval for the given Direction and Day
+     *
+     * @param timestamp
+     * @param direction
+     * @param day
+     * @return
+     */
+    public PeakData getPeakDataForDirection(long timestamp, Direction direction, Day day) {
+        int peakvehicles = 0;
+        long peakTimestamp = 0;
+        for (long initialTime = 0; initialTime < CONSTANTS.MILLIS.DAY; initialTime += timestamp) {
+            final Map<Day, List<VehicleRecord>> recordsMap = findRecordsInRangeAndDirection(initialTime, initialTime
+                    + timestamp, direction);
+
+            final int noOfVehicles = (recordsMap.get(day) == null) ? 0 : recordsMap.get(day).size();
+            if (noOfVehicles > peakvehicles) {
+                peakvehicles = noOfVehicles;
+                peakTimestamp = initialTime;
+            }
+        }
+        return new PeakData(peakTimestamp, peakvehicles);
     }
 
     @Override

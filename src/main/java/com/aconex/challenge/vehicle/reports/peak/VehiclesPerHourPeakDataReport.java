@@ -1,22 +1,18 @@
 /**
  *
  */
-package com.aconex.challenge.vehicle.reports.count.average;
+package com.aconex.challenge.vehicle.reports.peak;
 
 import com.aconex.challenge.vehicle.constants.CONSTANTS;
 
 /**
  * @author bmaturi
  */
-public class AverageVehiclesPerHourCountReport extends AbstractAverageVehicleCountTimeReport {
+public class VehiclesPerHourPeakDataReport extends AbstractPeakDataReport {
 
     private static final String HOUR_NAME = "HOUR";
-    private static final String NAME = "AverageVehiclesPerHourPerDirectionCount";
+    private static final String NAME = "VehiclesPerHourPeakReportForDirection";
 
-    /*
-     * (non-Javadoc)
-     * @see com.intercheck.challenge.vehicle.reports.VehicleReport#getName()
-     */
     @Override
     public String getName() {
         return NAME;
@@ -31,5 +27,4 @@ public class AverageVehiclesPerHourCountReport extends AbstractAverageVehicleCou
     protected String getTimeIntervalName() {
         return HOUR_NAME;
     }
-
 }
