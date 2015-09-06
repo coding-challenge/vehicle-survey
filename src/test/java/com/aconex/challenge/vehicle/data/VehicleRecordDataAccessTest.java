@@ -99,4 +99,12 @@ public class VehicleRecordDataAccessTest extends InitializeDataAccess {
         assertEquals(24, averageDistanceMap.size());
         assertEquals("68.702", averageDistanceMap.get(CONSTANTS.MILLIS.HOUR));
     }
+
+    @Test
+    public void getPeakDataForDirection() {
+        final PeakData peakData = dataAccess.getPeakDataForDirection(CONSTANTS.MILLIS.HOUR, Direction.A, Day.MONDAY);
+        assertNotNull(peakData);
+        assertEquals(16, peakData.getNoOfVehicles());
+        assertEquals(82800000, peakData.getTimestamp());
+    }
 }
