@@ -5,7 +5,6 @@ package com.aconex.challenge.vehicle.data;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -38,8 +37,8 @@ public class VehicleRecordDataAccess implements RecordDataAccess {
      * @return Map<Day, List<VehicleRecord>>
      */
     public Map<Day, List<VehicleRecord>> findRecordsInRangeAndDirection(long startTime,
-                                                                        long endTime,
-                                                                        Direction direction) {
+            long endTime,
+            Direction direction) {
 
         final Map<Day, List<VehicleRecord>> resultMap = new TreeMap<Day, List<VehicleRecord>>();
 
@@ -68,7 +67,7 @@ public class VehicleRecordDataAccess implements RecordDataAccess {
      * @return Map<Long, String>
      */
     public Map<Long, String> fetchAverageDistancesBetweenvehicles(long timeInterval, Direction direction) {
-        final Map<Long, String> averageResultMap = new HashMap<Long, String>();
+        final Map<Long, String> averageResultMap = new TreeMap<Long, String>();
         for (long initialTime = 0; initialTime < CONSTANTS.MILLIS.DAY; initialTime += timeInterval) {
             final Map<Day, List<VehicleRecord>> vehicleRecordsMap = findRecordsInRangeAndDirection(
                     initialTime, initialTime + timeInterval, direction);
@@ -109,7 +108,7 @@ public class VehicleRecordDataAccess implements RecordDataAccess {
      * @return Map<Long, String>
      */
     public Map<Long, String> fetchAverageSpeedForTimeInterval(long timeInterval, Direction direction) {
-        final Map<Long, String> averageResultMap = new HashMap<Long, String>();
+        final Map<Long, String> averageResultMap = new TreeMap<Long, String>();
         for (long initialTime = 0; initialTime < CONSTANTS.MILLIS.DAY; initialTime += timeInterval) {
             final Map<Day, List<VehicleRecord>> vehicleRecordsMap = findRecordsInRangeAndDirection(
                     initialTime, initialTime + timeInterval, direction);
