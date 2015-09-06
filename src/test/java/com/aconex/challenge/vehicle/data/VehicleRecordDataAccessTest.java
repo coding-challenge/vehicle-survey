@@ -80,6 +80,7 @@ public class VehicleRecordDataAccessTest extends InitializeDataAccess {
                 CONSTANTS.MILLIS.HOUR, Direction.A);
         assertNotNull(averageDistanceMap);
         assertEquals(24, averageDistanceMap.size());
+        assertEquals("0", averageDistanceMap.get(CONSTANTS.MILLIS.HOUR));
     }
 
     @Test
